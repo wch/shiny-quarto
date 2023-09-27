@@ -1,0 +1,11 @@
+---
+title: "Shiny Example"
+filters:
+  - shiny
+---
+
+## Heading
+
+This filter adds formatting to heading text.
+
+
