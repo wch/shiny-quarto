@@ -1,8 +1,7 @@
 title: Shiny
 author: Winston Chang
 version: 1.0.0
-quarto-required: ">=99.9.0"
+quarto-required: ">=1.4.388"
 contributes:
   filters:
     - shiny.lua
-

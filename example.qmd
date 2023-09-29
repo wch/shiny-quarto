@@ -2,10 +2,27 @@
 title: "Shiny Example"
 filters:
   - shiny
+execute:
+  keep-ipynb: true
 ---
 
-## Heading
+```{python}
+#| skip: true
+#| echo: false
 
-This filter adds formatting to heading text.
+output = display
+```
 
 
+```{python}
+from shiny import render, reactive, ui
+
+ui.input_text("txt", "Input some text:")
+```
+
+```{python}
+@output
+@render.text
+def foo():
+    return f"The input text is: { input.txt() }"
+```
