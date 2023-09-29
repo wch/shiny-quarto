@@ -4,14 +4,18 @@ _TODO_: Add a short description of your extension.
 
 ## Installing
 
-_TODO_: Replace the `<github-organization>` with your GitHub organization.
-
 ```bash
-quarto add <github-organization>/shiny
+quarto add wch/shiny-quarto
 ```
 
 This will install the extension under the `_extensions` subdirectory.
 If you're using version control, you will want to check in this directory.
+
+Also make sure to install Shiny for Python from the `quarto-ext` branch:
+
+```bash
+pip install git+https://github.com/posit-dev/py-shiny.git@quarto-ext#egg=shiny
+```
 
 ## Using
 
@@ -21,3 +25,8 @@ _TODO_: Describe how to use your extension.
 
 Here is the source code for a minimal example: [example.qmd](example.qmd).
 
+To build the example, clone this repository and run:
+
+```bash
+quarto render example.qmd  &&  shiny convert example.ipynb  &&  shiny run app.py
+```
