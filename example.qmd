@@ -24,6 +24,8 @@ htmltools.html_dependency_render_mode = "json"
 
 ```{python}
 from shiny import render, reactive, ui
+import matplotlib.pyplot as plt
+import numpy as np
 
 ui.input_text("txt", "Input some text:", value="Hello, Quarto + Shiny!")
 ```
@@ -37,7 +39,7 @@ def foo():
 
 
 ```{python}
-ui.input_slider("static_slider", "Static slider", 0, 10, 5)
+ui.input_slider("static_slider", "Static slider", 0, 100, 20)
 ```
 
 
@@ -46,6 +48,15 @@ ui.input_slider("static_slider", "Static slider", 0, 10, 5)
 @render.text
 def static_slider_value():
     return f"The static slider value is: { input.static_slider() }"
+
+@output
+@render.plot(alt="A histogram")
+def histogram():
+    np.random.seed(19680801)
+    x = 100 + 15 * np.random.randn(437)
+    plt.hist(x, input.static_slider(), density=True)
+
+ui.output_plot("histogram")
 ```
 
 
