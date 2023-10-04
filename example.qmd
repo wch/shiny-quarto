@@ -7,6 +7,7 @@ format:
 filters:
   - shiny
 execute:
+  echo: false
   keep-ipynb: true
 ---
 
@@ -42,12 +43,16 @@ def foo():
 ui.input_slider("static_slider", "Static slider", 0, 100, 20)
 ```
 
-
 ```{python}
 @output
 @render.text
 def static_slider_value():
     return f"The static slider value is: { input.static_slider() }"
+```
+
+
+```{python}
+#| output: false
 
 @output
 @render.plot(alt="A histogram")
@@ -56,16 +61,23 @@ def histogram():
     x = 100 + 15 * np.random.randn(437)
     plt.hist(x, input.static_slider(), density=True)
 
+@output
+@render.plot(alt="A histogram")
+def histogram2():
+    np.random.seed(34322)
+    x = 100 + 15 * np.random.randn(437)
+    plt.hist(x, input.static_slider(), density=True, color="#888888")
+
+```
+
+::: {layout="[ [1,1] ]"}
+
+```{python}
 ui.output_plot("histogram")
 ```
 
-
-
 ```{python}
-@output
-@render.ui
-def dyn_date_ui():
-    return ui.input_date("dyn_date", "Dynamic date", value = "2023-10-03")
-
-ui.output_ui("dyn_date")
+ui.output_plot("histogram2")
 ```
+
+:::
