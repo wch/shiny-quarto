@@ -1,7 +1,7 @@
 local hasDoneShinySetup = false
 
--- Try calling `pandoc.pipe('shinylive', ...)` and if it fails, print a message
--- about installing shinylive python package.
+-- Try calling `pandoc.pipe('shiny', ...)` and if it fails, print a message
+-- about installing shiny.
 function callPythonShiny(args)
   local res
   local status, err = pcall(
@@ -50,7 +50,19 @@ function ensureShinySetup()
   end
 end
 
+-- Convert the ipynb file to app.py, by calling `shiny convert`.
+function runShinyConvert()
+  filename = pandoc.path.filename(quarto.doc.input_file)
+  nb_filename = pandoc.path.split_extension(filename) .. ".ipynb"
+
+  callPythonShiny(
+    { "convert", nb_filename }
+  )
+end
+
+
 ensureShinySetup()
+runShinyConvert()
 
 -- -- Reformat all heading text
 -- function Header(el)

@@ -26,8 +26,8 @@ _TODO_: Describe how to use your extension.
 
 Here is the source code for a minimal example: [example.qmd](example.qmd).
 
-To build the example, clone this repository and run:
+To run the example, clone this repository, run the installation steps above, and then run:
 
 ```bash
-quarto render example.qmd  &&  shiny convert example.ipynb  &&  shiny run app.py
+quarto render example.qmd  &&  shiny run app.py
 ```
