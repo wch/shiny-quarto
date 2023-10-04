@@ -1,5 +1,9 @@
 ---
 title: "Shiny Example"
+format:
+  html:
+    keep-hidden: true
+
 filters:
   - shiny
 execute:
@@ -11,13 +15,17 @@ execute:
 #| echo: false
 
 output = display
+
+import htmltools
+# Needed for serializing static HTML dependencies to JSON
+htmltools.html_dependency_render_mode = "json"
 ```
 
 
 ```{python}
 from shiny import render, reactive, ui
 
-ui.input_text("txt", "Input some text:")
+ui.input_text("txt", "Input some text:", value="Hello, Quarto + Shiny!")
 ```
 
 ```{python}
@@ -25,4 +33,28 @@ ui.input_text("txt", "Input some text:")
 @render.text
 def foo():
     return f"The input text is: { input.txt() }"
+```
+
+
+```{python}
+ui.input_slider("static_slider", "Static slider", 0, 10, 5)
+```
+
+
+```{python}
+@output
+@render.text
+def static_slider_value():
+    return f"The static slider value is: { input.static_slider() }"
+```
+
+
+
+```{python}
+@output
+@render.ui
+def dyn_date_ui():
+    return ui.input_date("dyn_date", "Dynamic date", value = "2023-10-03")
+
+ui.output_ui("dyn_date")
 ```
