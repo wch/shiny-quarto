@@ -11,9 +11,10 @@ quarto add wch/shiny-quarto
 This will install the extension under the `_extensions` subdirectory.
 If you're using version control, you will want to check in this directory.
 
-Also make sure to install Shiny for Python from the `quarto-ext` branch:
+Also make sure to install htmltools and Shiny for Python from development branches:
 
 ```bash
+pip install git+https://github.com/posit-dev/py-htmltools.git@html-text-doc#egg=htmltools
 pip install git+https://github.com/posit-dev/py-shiny.git@quarto-ext#egg=shiny
 ```
 
