@@ -43,35 +43,52 @@ function ensureShinySetup()
   end
   hasDoneShinySetup = true
 
-
   local baseDeps = getShinyDeps()
   for idx, dep in ipairs(baseDeps) do
     quarto.doc.add_html_dependency(dep)
   end
 end
 
--- Convert the ipynb file to app.py, by calling `shiny convert`.
-function runShinyConvert()
-  filename = pandoc.path.filename(quarto.doc.input_file)
-  nb_filename = pandoc.path.split_extension(filename) .. ".ipynb"
 
-  callPythonShiny(
-    { "convert", nb_filename }
-  )
+codeCells = {
+  schema_version = 1,
+  cells = {},
+  html_file = ""
+}
+
+function CodeBlock(el)
+  if el.attr.classes:includes("python") and el.attr.classes:includes("cell-code") then
+    table.insert(codeCells.cells, { classes = el.attr.classes, text = el.text })
+  end
+
+  if el.attr.classes:includes("hidden") then
+    return nil
+  end
+
+  return el
 end
 
 
-ensureShinySetup()
-runShinyConvert()
+function Pandoc(doc)
+  ensureShinySetup()
 
--- -- Reformat all heading text
--- function Header(el)
---   el.content = pandoc.Emph(el.content)
---   return el
--- end
+  codeCells["html_file"] = pandoc.path.split_extension(
+    pandoc.path.filename(quarto.doc.output_file)
+  ) .. ".html"
 
--- function CodeBlock(el)
---   -- el.text = string.upper(el.text)
---   el.text = "--- Modified by extension ---\n" .. el.text
---   return el
--- end
+  -- Write the code cells to a temporary file.
+  codeCellsOutfile = pandoc.path.split_extension(quarto.doc.input_file) .. "-cells.tmp.json"
+  local file = io.open(codeCellsOutfile, "w")
+  if file == nil then
+    error("Error opening file: " .. codeCellsOutfile .. " for writing.")
+  end
+  file:write(quarto.json.encode(codeCells))
+  file:close()
+
+  -- Convert the json file to an app.py by calling `shiny convert`.
+  callPythonShiny(
+    { "convert", codeCellsOutfile }
+  )
+
+  -- os.remove(codeCellsOutfile)
+end

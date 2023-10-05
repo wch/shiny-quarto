@@ -8,12 +8,12 @@ filters:
   - shiny
 execute:
   echo: false
-  keep-ipynb: true
 ---
 
 ```{python}
-#| skip: true
 #| echo: false
+
+# skip
 
 output = display
 
@@ -67,7 +67,6 @@ def histogram2():
     np.random.seed(34322)
     x = 100 + 15 * np.random.randn(437)
     plt.hist(x, input.static_slider(), density=True, color="#888888")
-
 ```
 
 ::: {layout="[ [1,1] ]"}
