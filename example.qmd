@@ -1,27 +1,10 @@
 ---
 title: "Shiny Example"
-format:
-  html:
-    keep-hidden: true
-
-filters:
-  - shiny
-execute:
-  echo: false
+format: html
+server: shiny
+# execute:
+#   echo: true
 ---
-
-```{python}
-#| echo: false
-
-# skip
-
-output = display
-
-import htmltools
-# Needed for serializing static HTML dependencies to JSON
-htmltools.html_dependency_render_mode = "json"
-```
-
 
 ```{python}
 from shiny import render, reactive, ui
