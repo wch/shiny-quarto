@@ -90,5 +90,5 @@ function Pandoc(doc)
     { "convert", codeCellsOutfile }
   )
 
-  -- os.remove(codeCellsOutfile)
+  os.remove(codeCellsOutfile)
 end
