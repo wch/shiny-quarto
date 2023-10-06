@@ -14,21 +14,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 ui.input_text("txt", "Input some text:", value="Hello, Quarto + Shiny!")
-```
 
-```{python}
 @output
 @render.text
 def foo():
     return f"The input text is: { input.txt() }"
-```
 
-
-```{python}
 ui.input_slider("static_slider", "Static slider", 0, 100, 20)
-```
 
-```{python}
 @output
 @render.text
 def static_slider_value():
