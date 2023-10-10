@@ -2,8 +2,6 @@
 title: "Shiny Example"
 format: html
 server: shiny
-editor:
-  render-on-save: true
 # execute:
 #   echo: true
 ---
