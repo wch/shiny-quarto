@@ -9,6 +9,14 @@ editor:
 ---
 
 ```{python}
+#| context: setup
+
+# This code block with be both in the rendered UI, and at the top of example-app.py.
+
+[1, 2, 3]
+```
+
+```{python}
 from shiny import render, reactive, ui
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,10 +36,8 @@ def static_slider_value():
     return f"The static slider value is: { input.static_slider() }"
 ```
 
-
 ```{python}
-#| output: false
-
+#| context: server-session
 @output
 @render.plot(alt="A histogram")
 def histogram():
@@ -48,6 +54,7 @@ def histogram2():
 ```
 
 ```{python}
+#| context: ui
 #| layout-ncol: 2
 ui.output_plot("histogram")
 
