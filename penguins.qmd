@@ -21,7 +21,6 @@ numeric_cols = penguins.select_dtypes(include=["float64"]).columns.tolist()
 
 ```{python}
 #| context: setup
-
 # Colors
 import matplotlib.colors as mpl_colors
 import seaborn as sns  # type: ignore
@@ -74,8 +73,6 @@ ui.input_switch("show_margins", "Show marginal plots", value=True)
 ```
 
 ```{python}
-#| context: server-session
-
 @reactive.Calc
 def filtered_df() -> pd.DataFrame:
     """Returns a Pandas data frame that includes only the desired rows"""
@@ -103,9 +100,4 @@ def scatter():
         hue_order=species,
         legend=False,
     )
-```
-
-```{python}
-#| context: ui
-ui.output_plot("scatter", height = "600px")
 ```
